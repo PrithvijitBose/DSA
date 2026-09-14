@@ -11,21 +11,17 @@ class Solution(object):
 
         leng = 0
         l = head
+        # length of linked list
         while l != None:
             leng = leng + 1
-            l = l.next
-        d = leng - n + 1
+            l = l.next 
 
+
+        d = leng - n # 5-2=3
         prev = dummy
-        curr = head
         
-        # 0 1 2 3 4 5
-        #       p c
-        # d = 4
-        i = 0
-        while i < d -1:
-            curr = curr.next
+
+        for _ in range(d):
             prev= prev.next
-            i+=1
         prev.next = prev.next.next
         return dummy.next
