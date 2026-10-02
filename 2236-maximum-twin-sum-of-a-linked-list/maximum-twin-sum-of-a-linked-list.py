@@ -4,25 +4,33 @@
 #         self.val = val
 #         self.next = next
 class Solution(object):
-    def pairSum(self, head):
-        result = []
-
+    def reverseLL(self,head):
+        prev= None
         curr = head
 
         while curr != None:
-            result.append(curr.val)
-            curr = curr.next
-        
-        # result = [5,4,2,1]
-        i = 0
-        j = len(result)-1
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        return prev         
+    def pairSum(self, head):
+        slow = head
+        fast = head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        p2 = self.reverseLL(slow)
+        p1 = head
         maxi = float('-inf')
 
-        while i<j:
-            total = result[i]+result[j] #4+2 = 6
-            maxi = max(total,maxi) # 6 , 6 = 6
-            i+=1
-            j-=1
+        while p1 != None and p2 != None:
+            total = p1.val + p2.val
+            maxi = max(total,maxi)
+            p1 = p1.next
+            p2 = p2.next
         return maxi
 
             
