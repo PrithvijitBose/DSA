@@ -40,21 +40,7 @@ class Solution(object):
                         break
                 visited.add(nxt)
                 curr = nxt
-            curr = i
-
-            if isPos:
-                while nums[curr]>0:
-                    nxt = self.calcNextIdx(nums,curr)
-                    nums[curr] = 0
-
-                    curr = nxt
-
-            if not isPos:
-                while nums[curr]<0:
-                    nxt = self.calcNextIdx(nums,curr)
-                    nums[curr] = 0
-
-                    curr = nxt
+           
 
       
         return False
