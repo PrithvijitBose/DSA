@@ -8,38 +8,38 @@ class Solution(object):
 
         for i in range(len(nums)):
             # set -> indexes we have visited so far
-            # flas -> isPos = nums[i]> 0
+            # flag -> isPos = nums[i]> 0
             # [2,-1,1,2,2]
             #  0
             # {0,2,3}
 
             if nums[i]==0:
                 continue
-            visited = set()
-            visited.add(i)
 
             # Determine the direction of the loop (all positive or all negative)
             isPos = nums[i] > 0
-            curr = i
+            slow = i
+            fast = i
             # cycle detection
 
             while True:
-                nxt = self.calcNextIdx(nums,curr)
+                slow = self.calcNextIdx(nums,slow)
+                if (isPos and nums[slow] < 0) or (not isPos and nums[slow] > 0):
+                    break
+                fast = self.calcNextIdx(nums,fast)
+                if (isPos and nums[fast] < 0) or (not isPos and nums[fast] > 0):
+                    break 
+                fast = self.calcNextIdx(nums,fast)
+                if (isPos and nums[fast] < 0) or (not isPos and nums[fast] > 0):
+                    break 
 
-                if isPos and nums[nxt]< 0:
-                    break
-                if not isPos and nums[nxt] > 0:
-                    break
-                    
-                # Cycle detection
-                if nxt in visited:
-                    # A valid loop must have a length k > 1 (cannot loop back to itself immediately)
-                    if curr != nxt:
+                if slow == fast:
+                    #cycle
+                    # k > 1
+                    if slow != self.calcNextIdx(nums,slow):
                         return True
-                    else:
-                        break
-                visited.add(nxt)
-                curr = nxt
+                    break
+
             curr = i
 
             if isPos:
@@ -55,18 +55,7 @@ class Solution(object):
                     nums[curr] = 0
 
                     curr = nxt
-
-      
         return False
-
-
-
-
-
-
-
-
-        
 
         """
         :type nums: List[int]
